@@ -1,0 +1,18 @@
+<p>
+  <b>Dimension:</b>
+  <%=h @stat.dimension.name %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @stat.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @stat.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_stat_path(@stat) %> |
+<%= link_to 'Back', stats_path %>

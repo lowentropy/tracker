@@ -1,0 +1,24 @@
+<h1>Listing unit_prefs</h1>
+
+<table>
+  <tr>
+		<th>Stat</th>
+    <th>Unit</th>
+  </tr>
+
+<% for stat in Stat.find(:all) %>
+	<% pref = @user.pref(stat) -%>
+  <tr>
+		<td><%=h stat.name %></td>
+		<% if pref -%>
+			<td><%=h pref.unit.long_name %></td>
+			<td><%= link_to 'Edit', edit_unit_pref_path(pref) %></td>
+		<% else -%>
+			<td>(none set)</td>
+			<td><%= link_to 'Create', new_unit_pref_path(:stat_id => stat.id) %></td>
+		<% end -%>
+  </tr>
+<% end %>
+</table>
+
+<br />

@@ -1,0 +1,26 @@
+<h1>Listing logs</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Measurement</th>
+    <th>Measured at</th>
+    <th>Notes</th>
+  </tr>
+
+<% for log in @logs %>
+  <tr>
+    <td><%=h log.user_id %></td>
+    <td><%=h log.measurement_id %></td>
+    <td><%=h log.measured_at %></td>
+    <td><%=h log.notes %></td>
+    <td><%= link_to 'Show', log %></td>
+    <td><%= link_to 'Edit', edit_log_path(log) %></td>
+    <td><%= link_to 'Destroy', log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New log', new_log_path %>

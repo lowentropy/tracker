@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  dimension_id: 1
+  long_name: MyString
+  short_name: MyString
+  multiplier: 1.5
+
+two:
+  dimension_id: 1
+  long_name: MyString
+  short_name: MyString
+  multiplier: 1.5

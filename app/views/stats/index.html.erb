@@ -1,0 +1,24 @@
+<h1>Listing stats</h1>
+
+<table>
+  <tr>
+    <th>Dimension</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+<% for stat in @stats %>
+  <tr>
+    <td><%=h stat.dimension.name %></td>
+    <td><%=h stat.name %></td>
+    <td>...</td>
+    <td><%= link_to 'Show', stat %></td>
+    <td><%= link_to 'Edit', edit_stat_path(stat) %></td>
+    <td><%= link_to 'Destroy', stat, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New stat', new_stat_path %>

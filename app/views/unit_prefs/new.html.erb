@@ -1,0 +1,20 @@
+<h1>New unit_pref</h1>
+
+<% form_for(@unit_pref) do |f| %>
+  <%= f.error_messages %>
+
+	<p>
+		<%= f.label :stat_id %><br />
+		<%=h @stat.name %>
+		<%= f.hidden_field :stat_id, :value => @stat.id %>
+	</p>
+  <p>
+    <%= f.label :unit_id %><br />
+    <%= f.collection_select :unit_id, @units, :id, :long_name %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', unit_prefs_path %>

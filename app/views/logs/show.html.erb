@@ -1,0 +1,23 @@
+<p>
+  <b>User:</b>
+  <%=h @log.user_id %>
+</p>
+
+<p>
+  <b>Measurement:</b>
+  <%=h @log.measurement_id %>
+</p>
+
+<p>
+  <b>Measured at:</b>
+  <%=h @log.measured_at %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%=h @log.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_log_path(@log) %> |
+<%= link_to 'Back', logs_path %>

@@ -1,0 +1,24 @@
+<h1>Editing stat</h1>
+
+<% form_for(@stat) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :dimension_id %><br />
+    <%= f.collection_select :dimension_id, Dimension.find(:all), :id, :name %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @stat %> |
+<%= link_to 'Back', stats_path %>

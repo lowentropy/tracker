@@ -1,0 +1,23 @@
+<p>
+  <b>Dimension:</b>
+  <%=h @unit.dimension.name %>
+</p>
+
+<p>
+  <b>Long name:</b>
+  <%=h @unit.long_name %>
+</p>
+
+<p>
+  <b>Short name:</b>
+  <%=h @unit.short_name %>
+</p>
+
+<p>
+  <b>Multiplier:</b>
+  <%=h @unit.multiplier %>
+</p>
+
+
+<%= link_to 'Edit', edit_unit_path(@unit) %> |
+<%= link_to 'Back', units_path %>

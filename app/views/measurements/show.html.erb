@@ -1,0 +1,18 @@
+<p>
+  <b>Stat:</b>
+  <%=h @measurement.stat.name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @measurement.value %>
+</p>
+
+<p>
+  <b>Person:</b>
+  <%=h @measurement.person.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_measurement_path(@measurement) %> |
+<%= link_to 'Back', measurements_path %>

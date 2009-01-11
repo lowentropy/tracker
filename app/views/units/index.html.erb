@@ -1,0 +1,26 @@
+<h1>Listing units</h1>
+
+<table>
+  <tr>
+    <th>Dimension</th>
+    <th>Long name</th>
+    <th>Short name</th>
+    <th>Multiplier</th>
+  </tr>
+
+<% for unit in @units %>
+  <tr>
+    <td><%=h unit.dimension.name %></td>
+    <td><%=h unit.long_name %></td>
+    <td><%=h unit.short_name %></td>
+    <td><%=h unit.multiplier %></td>
+    <td><%= link_to 'Show', unit %></td>
+    <td><%= link_to 'Edit', edit_unit_path(unit) %></td>
+    <td><%= link_to 'Destroy', unit, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New unit', new_unit_path %>

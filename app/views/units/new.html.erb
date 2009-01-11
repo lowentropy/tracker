@@ -1,0 +1,28 @@
+<h1>New unit</h1>
+
+<% form_for(@unit) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :dimension_id %><br />
+		<%= f.collection_select :dimension_id, Dimension.find(:all),
+					:id, :name, {:prompt => false} %>
+  </p>
+  <p>
+    <%= f.label :long_name %><br />
+    <%= f.text_field :long_name %>
+  </p>
+  <p>
+    <%= f.label :short_name %><br />
+    <%= f.text_field :short_name %>
+  </p>
+  <p>
+    <%= f.label :multiplier %><br />
+    <%= f.text_field :multiplier %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', units_path %>
