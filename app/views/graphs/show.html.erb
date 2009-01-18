@@ -1,0 +1,33 @@
+<p>
+  <b>Type:</b>
+  <%=h @graph.type %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%=h @graph.user_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @graph.title %>
+</p>
+
+<p>
+  <b>Ylabel:</b>
+  <%=h @graph.ylabel %>
+</p>
+
+<p>
+  <b>Width:</b>
+  <%=h @graph.width %>
+</p>
+
+<p>
+  <b>Height:</b>
+  <%=h @graph.height %>
+</p>
+
+
+<%= link_to 'Edit', edit_graph_path(@graph) %> |
+<%= link_to 'Back', graphs_path %>

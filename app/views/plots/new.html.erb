@@ -1,0 +1,35 @@
+<h1>New plot</h1>
+
+<% form_for(@plot) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :stat_id %><br />
+    <%= f.text_field :stat_id %>
+  </p>
+  <p>
+    <%= f.label :graph_id %><br />
+    <%= f.text_field :graph_id %>
+  </p>
+  <p>
+    <%= f.label :color %><br />
+    <%= f.text_field :color %>
+  </p>
+  <p>
+    <%= f.label :style %><br />
+    <%= f.text_field :style %>
+  </p>
+  <p>
+    <%= f.label :smooth %><br />
+    <%= f.check_box :smooth %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', plots_path %>

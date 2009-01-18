@@ -1,0 +1,26 @@
+<h1>Listing person_stats</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Stat</th>
+    <th>Position</th>
+    <th>Unit</th>
+  </tr>
+
+<% for person_stat in @person_stats %>
+  <tr>
+    <td><%=h person_stat.person_id %></td>
+    <td><%=h person_stat.stat_id %></td>
+    <td><%=h person_stat.position %></td>
+    <td><%=h person_stat.unit_id %></td>
+    <td><%= link_to 'Show', person_stat %></td>
+    <td><%= link_to 'Edit', edit_person_stat_path(person_stat) %></td>
+    <td><%= link_to 'Destroy', person_stat, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New person_stat', new_person_stat_path %>

@@ -1,0 +1,30 @@
+<h1>Listing plots</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Stat</th>
+    <th>Graph</th>
+    <th>Color</th>
+    <th>Style</th>
+    <th>Smooth</th>
+  </tr>
+
+<% for plot in @plots %>
+  <tr>
+    <td><%=h plot.name %></td>
+    <td><%=h plot.stat_id %></td>
+    <td><%=h plot.graph_id %></td>
+    <td><%=h plot.color %></td>
+    <td><%=h plot.style %></td>
+    <td><%=h plot.smooth %></td>
+    <td><%= link_to 'Show', plot %></td>
+    <td><%= link_to 'Edit', edit_plot_path(plot) %></td>
+    <td><%= link_to 'Destroy', plot, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New plot', new_plot_path %>

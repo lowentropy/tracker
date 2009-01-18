@@ -1,4 +1,7 @@
 class LogsController < ApplicationController
+
+	before_filter :get_current_person
+
   # GET /logs
   # GET /logs.xml
   def index

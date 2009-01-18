@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%=h @plot.name %>
+</p>
+
+<p>
+  <b>Stat:</b>
+  <%=h @plot.stat_id %>
+</p>
+
+<p>
+  <b>Graph:</b>
+  <%=h @plot.graph_id %>
+</p>
+
+<p>
+  <b>Color:</b>
+  <%=h @plot.color %>
+</p>
+
+<p>
+  <b>Style:</b>
+  <%=h @plot.style %>
+</p>
+
+<p>
+  <b>Smooth:</b>
+  <%=h @plot.smooth %>
+</p>
+
+
+<%= link_to 'Edit', edit_plot_path(@plot) %> |
+<%= link_to 'Back', plots_path %>

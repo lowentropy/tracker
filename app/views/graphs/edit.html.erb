@@ -1,0 +1,36 @@
+<h1>Editing graph</h1>
+
+<% form_for(@graph) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </p>
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :ylabel %><br />
+    <%= f.text_field :ylabel %>
+  </p>
+  <p>
+    <%= f.label :width %><br />
+    <%= f.text_field :width %>
+  </p>
+  <p>
+    <%= f.label :height %><br />
+    <%= f.text_field :height %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @graph %> |
+<%= link_to 'Back', graphs_path %>

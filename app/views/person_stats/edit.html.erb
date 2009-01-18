@@ -1,0 +1,28 @@
+<h1>Editing person_stat</h1>
+
+<% form_for(@person_stat) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :person_id %><br />
+    <%= f.text_field :person_id %>
+  </p>
+  <p>
+    <%= f.label :stat_id %><br />
+    <%= f.text_field :stat_id %>
+  </p>
+  <p>
+    <%= f.label :position %><br />
+    <%= f.text_field :position %>
+  </p>
+  <p>
+    <%= f.label :unit_id %><br />
+    <%= f.text_field :unit_id %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @person_stat %> |
+<%= link_to 'Back', person_stats_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  stat_id: 1
+  graph_id: 1
+  color: MyString
+  style: MyString
+  smooth: false
+
+two:
+  name: MyString
+  stat_id: 1
+  graph_id: 1
+  color: MyString
+  style: MyString
+  smooth: false
