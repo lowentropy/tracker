@@ -13,6 +13,7 @@
     <td><%= link_to 'Show', person %></td>
     <td><%= link_to 'Edit', edit_person_path(person) %></td>
     <td><%= link_to 'Destroy', person, :confirm => 'Are you sure?', :method => :delete %></td>
+		<td><%= link_to 'Activate', logs_path(:person => person.id) %></td>
   </tr>
 <% end %>
 </table>

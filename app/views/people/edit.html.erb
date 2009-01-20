@@ -19,5 +19,27 @@
   </p>
 <% end %>
 
+<p>
+	<b>Stats</b>
+
+	<ul>
+	<% @person.person_stats.each do |pstat| -%>
+		<li>
+			<%=h pstat.stat.name %>
+    	<%= link_to 'Destroy', pstat,
+						:confirm => 'Are you sure?',
+						:method => :delete %>
+		</li>
+	<% end -%>
+	</ul>
+
+	<% form(new_stat_path) do -%>
+		<%= collection_select 
+	<% end -%>
+
+
+</p>
+
+
 <%= link_to 'Show', @person %> |
 <%= link_to 'Back', people_path %>

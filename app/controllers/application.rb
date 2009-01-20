@@ -39,6 +39,7 @@ private
 	end
 
 	def get_current_person
+		session[:person_id] = params[:person] if params[:person]
 		@person = Person.find(session[:person_id]) if session[:person_id]
 	end
 
