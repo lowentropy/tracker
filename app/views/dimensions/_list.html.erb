@@ -1,0 +1,29 @@
+<!--<table id="sortable_list">
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% for dimension in @dimensions %>
+  <tr id="item_<%= dimension.id %>">
+    <td><%=h dimension.name %></td>
+    <td><%= link_to 'Show', dimension %></td>
+    <td><%= link_to 'Edit', edit_dimension_path(dimension) %></td>
+    <td><%= link_to 'Destroy', dimension, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+</table>-->
+
+<ul id="sortable_list">
+<% for dimension in @dimensions -%>
+	<li id="item_<%= dimension.id %>">
+		<b><%=h dimension.name %></b>
+		<%= link_to 'Show', dimension %>
+		<%= link_to 'Edit', edit_dimension_path(dimension) %>
+		<%= link_to 'Delete', dimension, :confirm => 'Are you sure?',
+					:method => :delete %>
+	</li>
+<% end -%>
+</ul>
+
+<%= sortable_element('sortable_list', :url => {:action => :update_positions}) %>

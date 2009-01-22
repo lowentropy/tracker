@@ -60,17 +60,7 @@ class PersonStatsController < ApplicationController
   # PUT /person_stats/1.xml
   def update
     @person_stat = PersonStat.find(params[:id])
-
-    respond_to do |format|
-      if @person_stat.update_attributes(params[:person_stat])
-        flash[:notice] = 'PersonStat was successfully updated.'
-        format.html { redirect_to(:back) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @person_stat.errors, :status => :unprocessable_entity }
-      end
-    end
+		render :nothing => true
   end
 
   # DELETE /person_stats/1
@@ -78,10 +68,6 @@ class PersonStatsController < ApplicationController
   def destroy
     @person_stat = PersonStat.find(params[:id])
     @person_stat.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(:back) }
-      format.xml  { head :ok }
-    end
+		redirect_to :back
   end
 end

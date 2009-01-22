@@ -1,4 +1,12 @@
 class PeopleController < ApplicationController
+
+	def reorder_person_stats
+		params[:person_stats].each_with_index do |id,pos|
+			PersonStat.update(id, :position => pos+1)
+		end
+		render :nothing => true
+	end
+
   # GET /people
   # GET /people.xml
   def index

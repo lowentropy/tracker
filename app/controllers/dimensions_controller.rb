@@ -1,8 +1,16 @@
 class DimensionsController < ApplicationController
+
+	def update_positions
+		params[:sortable_list].each_with_index do |id,pos|
+			Dimension.update(id, :position => pos+1)
+		end
+		render :nothing => true
+	end
+
   # GET /dimensions
   # GET /dimensions.xml
   def index
-    @dimensions = Dimension.find(:all)
+    @dimensions = Dimension.find(:all, :order => :position)
 
     respond_to do |format|
       format.html # index.html.erb

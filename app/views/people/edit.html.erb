@@ -22,21 +22,11 @@
 <p>
 	<b>Stats</b>
 
-	<ul>
-	<% @person.person_stats.each do |pstat| -%>
-		<li>
-			<%=h pstat.stat.name %>
-			<% form_for(pstat) do |f| -%>
-				<%= f.label :unit_id %>
-				<%= f.collection_select :unit_id, pstat.stat.units, :id, :long_name %>
-				<%= f.submit 'Choose' %>
-			<% end -%>
-    	<%= link_to 'Destroy', pstat,
-						:confirm => 'Are you sure?',
-						:method => :delete %>
-		</li>
+	<% sort_list @person, :person_stats do |pstat| -%>
+		<b><%=h pstat.stat.name %></b>
+		<%= collection_update pstat,:unit_id,pstat.stat.units,:id,:long_name %>
+		<%= link_to 'del', pstat, :confirm => 'Sure?', :method => :delete %>
 	<% end -%>
-	</ul>
 
 	<% form_for(:person_stat, :url => person_stats_path) do |f| -%>
 		<%= f.label :stat_id %>
