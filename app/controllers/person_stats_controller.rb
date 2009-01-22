@@ -41,11 +41,13 @@ class PersonStatsController < ApplicationController
   # POST /person_stats.xml
   def create
     @person_stat = PersonStat.new(params[:person_stat])
+		@stat = Stat.find @person_stat.stat_id
+		@person_stat.unit_id = @stat.units.first.id
 
     respond_to do |format|
       if @person_stat.save
         flash[:notice] = 'PersonStat was successfully created.'
-        format.html { redirect_to(@person_stat) }
+        format.html { redirect_to(:back) }
         format.xml  { render :xml => @person_stat, :status => :created, :location => @person_stat }
       else
         format.html { render :action => "new" }
@@ -62,7 +64,7 @@ class PersonStatsController < ApplicationController
     respond_to do |format|
       if @person_stat.update_attributes(params[:person_stat])
         flash[:notice] = 'PersonStat was successfully updated.'
-        format.html { redirect_to(@person_stat) }
+        format.html { redirect_to(:back) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -78,7 +80,7 @@ class PersonStatsController < ApplicationController
     @person_stat.destroy
 
     respond_to do |format|
-      format.html { redirect_to(person_stats_url) }
+      format.html { redirect_to(:back) }
       format.xml  { head :ok }
     end
   end

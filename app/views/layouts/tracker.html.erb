@@ -16,6 +16,7 @@
 <br/>
 
 <% if @user %>
+	<%= link_to 'Home', logs_path %>
 	<%= link_to 'Log Out', {:controller => 'users', :action => 'logout', :id => @user} %>
 <% end %>
 
