@@ -11,8 +11,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :unit_prefs
 
-  map.resources :logs
-
   map.resources :measurements
 
   map.resources :people

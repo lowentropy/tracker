@@ -24,13 +24,14 @@
 
 	<% sort_list @person, :person_stats do |pstat| -%>
 		<b><%=h pstat.stat.name %></b>
-		<%= collection_update pstat,:unit_id,pstat.stat.units,:id,:long_name %>
+		<%= collection_update pstat, :unit_id, pstat.stat.units, :id, :long_name %>
 		<%= link_to 'del', pstat, :confirm => 'Sure?', :method => :delete %>
 	<% end -%>
 
 	<% form_for(:person_stat, :url => person_stats_path) do |f| -%>
 		<%= f.label :stat_id %>
-		<%= f.collection_select :stat_id, @user.stats, :id, :name %>
+		<%= f.collection_select :stat_id, @person.unused_stats,
+					:id, :name, :prompt => true %>
 		<%= f.hidden_field :person_id, :value => @person.id %>
 		<%= f.submit 'Add' %>
 	<% end -%>

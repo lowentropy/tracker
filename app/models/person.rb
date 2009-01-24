@@ -6,4 +6,8 @@ class Person < ActiveRecord::Base
 	has_many :stats, :through => :person_stats
 	belongs_to :user
 
+	def unused_stats
+		user.stats.reject {|stat| stats.include? stat}
+	end
+
 end
