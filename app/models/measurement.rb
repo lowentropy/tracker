@@ -15,18 +15,12 @@ class Measurement < ActiveRecord::Base
 	}
 
 	named_scope :in_range, lambda {|range|
-		{ :conditions => {:measured_at => time_range(range)} }
+		{ :conditions => ["date(measured_at) BETWEEN ? AND ?",
+				range.begin.to_date, range.end.to_date] }
 	}
 
 	def day
 		measured_at.strftime('%Y-%m-%d')
-	end
-
-private
-
-	def self.time_range(range)
-		range.begin.class.is_a?(Date) ? range :
-			(range.begin.beginning_of_day .. range.end.end_of_day)
 	end
 
 end
