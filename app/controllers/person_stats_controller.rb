@@ -60,6 +60,7 @@ class PersonStatsController < ApplicationController
   # PUT /person_stats/1.xml
   def update
     @person_stat = PersonStat.find(params[:id])
+		@person_stat.update_attributes :unit_id => params[:unit_id]
 		render :nothing => true
   end
 

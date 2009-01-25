@@ -1,4 +1,7 @@
 class MeasurementsController < ApplicationController
+
+	before_filter :get_current_person
+
   # GET /measurements
   # GET /measurements.xml
   def index

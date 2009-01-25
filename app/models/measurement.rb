@@ -5,10 +5,8 @@ class Measurement < ActiveRecord::Base
 
 	named_scope :of, lambda {|stat|
 		if stat.is_a? Stat
-			puts "STAT: #{stat.id}"
 			{ :conditions => {:stat_id => stat.id} }
 		else
-			puts "STAT NAME: #{stat}"
 			{ :joins => :stat,
 				:conditions => ["stats.name = ?", stat] }
 		end
@@ -21,6 +19,10 @@ class Measurement < ActiveRecord::Base
 
 	def day
 		measured_at.strftime('%Y-%m-%d')
+	end
+
+	def in(unit)
+		"#{value * unit.multiplier} #{unit.short_name}"
 	end
 
 end

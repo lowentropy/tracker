@@ -1,7 +1,19 @@
 <h1>Logs for <%= link_to @person.name, @person %></h1>
+<% table = @person.table -%>
 
-<ul>
-<% @person.stats.each do |stat| -%>
-	<li><%=h stat.name %></li>
+<table>
+	<tr>
+		<th>Day</th>
+	<% @person.stats.each do |stat| -%>
+		<th><%=h stat.name.capitalize %></th>
+	<% end -%>
+	</tr>
+<% table.each do |day,row| -%>
+	<tr>
+		<td><%=h day %></td>
+	<% row.each do |values| %>
+		<td><%=h values.join(' / ') %></td>
+	<% end -%>
+	</tr>
 <% end -%>
-</ul>
+</table>

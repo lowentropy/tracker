@@ -13,9 +13,11 @@ module ApplicationHelper
 	end
 
 	def collection_update(object, attribute, choices, id_attr, text_attr)
-		collection_select object.id.to_s, attribute, choices, id_attr, text_attr,
+		name = "#{object.class.name.underscore}_#{object.id}"
+		eval "@#{name} = object"
+		collection_select name, attribute, choices, id_attr, text_attr,
 			{}, :onchange => remote_function(
-				:with => "'#{attribute}='+$('#{object.id}_#{attribute}').value",
+				:with => "'#{attribute}='+$('#{name}_#{attribute}').value",
 				:url => object, :method => :put)
 	end
 
