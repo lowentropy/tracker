@@ -5,5 +5,6 @@ class PersonStat < ActiveRecord::Base
 	belongs_to :person
 	belongs_to :stat
 	belongs_to :unit
+	belongs_to :summary_mode
 
 end

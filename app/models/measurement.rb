@@ -21,8 +21,16 @@ class Measurement < ActiveRecord::Base
 		measured_at.strftime('%Y-%m-%d')
 	end
 
+	def short_time
+		measured_at.strftime('%l%P')
+	end
+
 	def in(unit)
 		"#{value * unit.multiplier} #{unit.short_name}"
+	end
+
+	def display(unit)
+		"#{short_time}: #{self.in(unit)}"
 	end
 
 end

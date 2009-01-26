@@ -1,7 +1,7 @@
 <h1>Logs for <%= link_to @person.name, @person %></h1>
 <% table = @person.table -%>
 
-<table>
+<table class="measurements">
 	<tr>
 		<th>Day</th>
 	<% @person.stats.each do |stat| -%>
@@ -11,8 +11,9 @@
 <% table.each do |day,row| -%>
 	<tr>
 		<td><%=h day %></td>
-	<% row.each do |values| %>
-		<td><%=h values.join(' / ') %></td>
+	<% row.each_with_index do |measurements,i| %>
+		<% unit = @person.person_stats[i].unit -%>
+		<td><%= measurements.map {|m| m.display(unit)}.join("<br/>") %></td>
 	<% end -%>
 	</tr>
 <% end -%>

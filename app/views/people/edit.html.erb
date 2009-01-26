@@ -21,11 +21,26 @@
 
 <p>
 	<b>Stats</b>
+	(drag to reorder)
 
-	<% sort_list @person, :person_stats do |pstat| -%>
-		<b><%=h pstat.stat.name %></b>
-		<%= collection_update pstat, :unit_id, pstat.stat.units, :id, :long_name %>
+	<% modes = SummaryMode.find(:all) -%>
+	<% sort_list(@person, :person_stats,
+								{}, :style => "margin: 20px") do |pstat| -%>
+		<b><%=h pstat.stat.name.capitalize %></b>
 		<%= link_to 'del', pstat, :confirm => 'Sure?', :method => :delete %>
+		<font size="2">
+		<table style="border-left: 1px solid grey; border-bottom: 1px solid grey">
+			<tr> <th>Unit</th> <th>Summary</th> </tr>
+			<tr>
+				<td align="center">
+					<%= collection_update pstat, :unit_id,
+							pstat.stat.units, :id, :long_name %></td>
+				<td align="center">
+					<%= collection_update pstat, :summary_mode_id,
+							modes, :id, :name %></td>
+			</tr>
+		</table>
+		</font>
 	<% end -%>
 
 	<% form_for(:person_stat, :url => person_stats_path) do |f| -%>

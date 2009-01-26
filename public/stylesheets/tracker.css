@@ -1,0 +1,22 @@
+table.measurements {
+	border-width: 1px 1px 1px 1px;
+	border-spacing: 2px;
+	border-style: none none none none;
+	border-color: gray gray gray gray;
+	border-collapse: collapse;
+	background-color: white;
+}
+table.measurements th {
+	border-width: 1px 1px 1px 1px;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	background-color: rgb(255, 245, 238)
+}
+table.measurements td {
+	border-width: 1px 1px 1px 1px;
+	padding: 3px 3px 3px 3px;
+	border-style: solid solid solid solid;
+	border-color: gray gray gray gray;
+	background-color: rgb(255, 245, 238)
+}

@@ -43,6 +43,7 @@ class PersonStatsController < ApplicationController
     @person_stat = PersonStat.new(params[:person_stat])
 		@stat = Stat.find @person_stat.stat_id
 		@person_stat.unit_id = @stat.units.first.id
+		@person_stat.summary_mode_id = SummaryMode.find :first
 
     respond_to do |format|
       if @person_stat.save
@@ -60,7 +61,7 @@ class PersonStatsController < ApplicationController
   # PUT /person_stats/1.xml
   def update
     @person_stat = PersonStat.find(params[:id])
-		@person_stat.update_attributes :unit_id => params[:unit_id]
+		@person_stat.update_attributes params[:person_stat]
 		render :nothing => true
   end
 

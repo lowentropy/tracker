@@ -1,0 +1,16 @@
+<h1>Editing summary_mode</h1>
+
+<% form_for(@summary_mode) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @summary_mode %> |
+<%= link_to 'Back', summary_modes_path %>

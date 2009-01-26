@@ -1,0 +1,20 @@
+<h1>Listing summary_modes</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% for summary_mode in @summary_modes %>
+  <tr>
+    <td><%=h summary_mode.name %></td>
+    <td><%= link_to 'Show', summary_mode %></td>
+    <td><%= link_to 'Edit', edit_summary_mode_path(summary_mode) %></td>
+    <td><%= link_to 'Destroy', summary_mode, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New summary_mode', new_summary_mode_path %>
