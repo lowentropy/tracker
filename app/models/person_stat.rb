@@ -7,4 +7,6 @@ class PersonStat < ActiveRecord::Base
 	belongs_to :unit
 	belongs_to :summary_mode
 
+	named_scope :visible, :conditions => {:visible => true}
+
 end

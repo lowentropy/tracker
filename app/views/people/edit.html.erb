@@ -30,7 +30,7 @@
 		<%= link_to 'del', pstat, :confirm => 'Sure?', :method => :delete %>
 		<font size="2">
 		<table style="border-left: 1px solid grey; border-bottom: 1px solid grey">
-			<tr> <th>Unit</th> <th>Summary</th> </tr>
+			<tr> <th>Unit</th> <th>Summary</th> <th>Visible</th> </tr>
 			<tr>
 				<td align="center">
 					<%= collection_update pstat, :unit_id,
@@ -38,6 +38,8 @@
 				<td align="center">
 					<%= collection_update pstat, :summary_mode_id,
 							modes, :id, :name %></td>
+				<td align="center">
+					<%= boolean_update pstat, :visible %></td>
 			</tr>
 		</table>
 		</font>

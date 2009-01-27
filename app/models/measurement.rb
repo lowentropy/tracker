@@ -4,15 +4,15 @@ class Measurement < ActiveRecord::Base
 	belongs_to :stat
 
 	named_scope :of, lambda {|stat|
-		if stat.is_a? Stat
-			{ :conditions => {:stat_id => stat.id} }
-		else
+		if stat.is_a? String
 			{ :joins => :stat,
 				:conditions => ["stats.name = ?", stat] }
+		else
+			{ :conditions => {:stat_id => stat} }
 		end
 	}
 
-	named_scope :in_range, lambda {|range|
+	named_scope :inside, lambda {|range|
 		{ :conditions => ["date(measured_at) BETWEEN ? AND ?",
 				range.begin.to_date, range.end.to_date] }
 	}

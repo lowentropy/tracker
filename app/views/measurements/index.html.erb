@@ -4,15 +4,16 @@
 <table class="measurements">
 	<tr>
 		<th>Day</th>
-	<% @person.stats.each do |stat| -%>
+	<% @person.visible_stats.each do |stat| -%>
 		<th><%=h stat.name.capitalize %></th>
 	<% end -%>
 	</tr>
 <% table.each do |day,row| -%>
 	<tr>
 		<td><%=h day %></td>
+	<% pstats = @person.person_stats.visible -%>
 	<% row.each_with_index do |measurements,i| %>
-		<% unit = @person.person_stats[i].unit -%>
+		<% unit = pstats[i].unit -%>
 		<td><%= measurements.map {|m| m.display(unit)}.join("<br/>") %></td>
 	<% end -%>
 	</tr>
