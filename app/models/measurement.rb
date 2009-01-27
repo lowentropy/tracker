@@ -1,14 +1,13 @@
 class Measurement < ActiveRecord::Base
 
-	belongs_to :person
-	belongs_to :stat
+	belongs_to :person_stat
 
 	named_scope :of, lambda {|stat|
 		if stat.is_a? String
 			{ :joins => :stat,
 				:conditions => ["stats.name = ?", stat] }
 		else
-			{ :conditions => {:stat_id => stat} }
+			{ :conditions => { :person_stat => stat } }
 		end
 	}
 
@@ -26,7 +25,7 @@ class Measurement < ActiveRecord::Base
 	end
 
 	def in(unit)
-		"#{value * unit.multiplier} #{unit.short_name}"
+		"#{unit.denormalize(value)} #{unit.short_name}"
 	end
 
 	def display(unit)
