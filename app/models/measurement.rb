@@ -12,8 +12,7 @@ class Measurement < ActiveRecord::Base
 	}
 
 	named_scope :inside, lambda {|range|
-		{ :conditions => ["date(measured_at) BETWEEN ? AND ?",
-				range.begin.to_date, range.end.to_date] }
+		{ :conditions => {:measured_at => utc_bound(range)} }
 	}
 
 	def day
@@ -21,7 +20,7 @@ class Measurement < ActiveRecord::Base
 	end
 
 	def short_time
-		measured_at.strftime('%l%P')
+		measured_at.strftime('%l:%M%P')
 	end
 
 	def trim(value)
@@ -34,6 +33,15 @@ class Measurement < ActiveRecord::Base
 
 	def display(unit)
 		"#{short_time}: #{self.in(unit)}"
+	end
+
+private
+
+	def self.utc_bound(range)
+		a, b = range.begin.to_date, range.end.to_date
+		a = a.beginning_of_day
+		b = b.end_of_day
+		(a.utc..b.utc)
 	end
 
 end

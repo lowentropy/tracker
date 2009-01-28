@@ -1,0 +1,6 @@
+- merge User/Person, and merge Stat/PersonStat
+- stop auto-updating, use an in-place edit of the
+  whole stat instead
+- allow user to create stat groups
+- import food data and implement tracking
+- find out how to hook up SMS

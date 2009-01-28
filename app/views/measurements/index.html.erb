@@ -6,6 +6,8 @@
 	<%= submit_tag 'add' %>
 <% end %>
 
+<br/>
+
 <table class="measurements">
 	<tr>
 		<th>Day</th>
@@ -15,7 +17,7 @@
 	</tr>
 <% table.each_row do |day,row| -%>
 	<tr>
-		<td><%=h day %></td>
+		<td><b><%=h day %></b></td>
 	<% pstats = @person.person_stats.visible -%>
 	<% row.each_with_index do |measurements,i| %>
 		<% unit = pstats[i].unit -%>
