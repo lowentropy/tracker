@@ -24,8 +24,12 @@ class Measurement < ActiveRecord::Base
 		measured_at.strftime('%l%P')
 	end
 
+	def trim(value)
+		"%.#{person_stat.decimal_places}f" % value
+	end
+
 	def in(unit)
-		"#{unit.denormalize(value)} #{unit.short_name}"
+		"#{trim(unit.denormalize(value))} #{unit.short_name}"
 	end
 
 	def display(unit)

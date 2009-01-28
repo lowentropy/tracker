@@ -6,15 +6,14 @@
 	<%= submit_tag 'add' %>
 <% end %>
 
-<% if false -%>
 <table class="measurements">
 	<tr>
 		<th>Day</th>
-	<% @person.visible_stats.each do |stat| -%>
-		<th><%=h stat.name.capitalize %></th>
+	<% @person.person_stats.visible.each do |pstat| -%>
+		<th><%=h pstat.stat.name.capitalize %></th>
 	<% end -%>
 	</tr>
-<% table.each do |day,row| -%>
+<% table.each_row do |day,row| -%>
 	<tr>
 		<td><%=h day %></td>
 	<% pstats = @person.person_stats.visible -%>
@@ -25,4 +24,3 @@
 	</tr>
 <% end -%>
 </table>
-<% end -%>
