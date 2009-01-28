@@ -43,7 +43,7 @@ class MeasurementsController < ApplicationController
   # POST /measurements
   # POST /measurements.xml
   def create
-		@measurements = if params[:quick]
+		@measurement = if params[:quick]
 			@person.quick params[:quick]
 		else
    		Measurement.new(params[:measurement])
@@ -52,10 +52,10 @@ class MeasurementsController < ApplicationController
     respond_to do |format|
       if @measurement.save
         flash[:notice] = 'Measurement was successfully created.'
-        format.html { redirect_to(@measurement) }
+        format.html { redirect_to(:back) }
         format.xml  { render :xml => @measurement, :status => :created, :location => @measurement }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to(:back) }
         format.xml  { render :xml => @measurement.errors, :status => :unprocessable_entity }
       end
     end

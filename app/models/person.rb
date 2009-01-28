@@ -31,19 +31,30 @@ class Person < ActiveRecord::Base
 		stat.measurements.create :measured_at => time, :value => value
 	end
 
+	# quick-add. format: [<num> [<unit>]] <stat> [(at|@) <time>]
 	def quick(sentence)
 		words = sentence.split(/\s+/)
-		raise 'not enough words' if words.size < 2
-		time = if words[-2] =~ /at|@/
-			returning(time = words.pop) { words.pop }
-		else
-			Time.now
+		
+		# use the explicitly given date/time
+		time = DateTime.now
+		if i = words.index('at') || words.index('@')
+			time = words[i+1..-1].join ' '
+			words = words[0...i]
 		end
-		raise 'not enough words after time extraction' if words.size < 2
-		value = words[0]
-		value = "#{value} #{words[1]}" if words.size > 2
-		part = words[-1]
-		measure part, time, value
+
+		# use the explicitly given numeric value
+		value = 1.0
+		if words[0].to_f != 0.0
+			value = words.shift.to_f
+			# modify the value with an explicitly given unit
+			if words.size > 1
+				value = "#{value} #{words.shift}"
+			end
+		end
+
+		# throw out bad sentences
+		throw "invalid sentence" if words.size != 1
+		measure words[0], time, value
 	end
 
 private

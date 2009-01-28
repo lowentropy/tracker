@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
 	before_filter :login
+	before_filter :set_time_zone
 
 private
 
@@ -42,6 +43,10 @@ private
 		session[:person_id] = params[:person] if params[:person]
 		@person = Person.find(session[:person_id]) if session[:person_id]
 		@person ||= @user.people.first
+	end
+
+	def set_time_zone
+		Time.zone = @user.time_zone if @user
 	end
 
 end
