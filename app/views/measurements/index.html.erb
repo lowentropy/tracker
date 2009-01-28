@@ -1,6 +1,12 @@
 <h1>Logs for <%= link_to @person.name, @person %></h1>
 <% table = @person.table -%>
 
+<% form_tag do |f| %>
+	<%= text_field_tag 'quick' %>
+	<%= submit_tag 'add' %>
+<% end %>
+
+<% if false -%>
 <table class="measurements">
 	<tr>
 		<th>Day</th>
@@ -19,3 +25,4 @@
 	</tr>
 <% end -%>
 </table>
+<% end -%>

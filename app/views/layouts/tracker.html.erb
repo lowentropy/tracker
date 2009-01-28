@@ -17,7 +17,13 @@
 <br/>
 
 <% if @user %>
-	<%= link_to 'Home', measurements_path %>
+	<%= link_to 'Measurements', measurements_path %><br/>
+	<% if @person -%>
+		Person: <%= link_to @person.name, @person %>
+	<% else -%>
+		No person selected.
+	<% end -%>
+	(<%= link_to 'change', people_path %>)<br/>
 	<%= link_to 'Log Out', {:controller => 'users', :action => 'logout', :id => @user} %>
 <% end %>
 

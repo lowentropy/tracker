@@ -43,7 +43,11 @@ class MeasurementsController < ApplicationController
   # POST /measurements
   # POST /measurements.xml
   def create
-    @measurement = Measurement.new(params[:measurement])
+		@measurements = if params[:quick]
+			@person.quick params[:quick]
+		else
+   		Measurement.new(params[:measurement])
+		end
 
     respond_to do |format|
       if @measurement.save
@@ -85,4 +89,5 @@ class MeasurementsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end
