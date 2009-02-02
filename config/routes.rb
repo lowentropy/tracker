@@ -11,9 +11,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :measurements
 
-  map.resources :people
-
-  map.resources :users, :collection => {:complete_login => :get, :start_login => :get}
+  map.resources :people, :collection => {:complete_login => :get, :start_login => :get}
 
   map.resources :units
 
