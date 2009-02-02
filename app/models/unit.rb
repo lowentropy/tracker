@@ -1,8 +1,7 @@
 class Unit < ActiveRecord::Base
 
 	belongs_to :dimension
-	has_many :unit_prefs, :dependent => :destroy
-	has_many :person_stats, :dependent => :destroy
+	has_many :person_stats # don't delete
 
 	def self.parse(amount)
 		idx = amount.rindex ' '
@@ -15,7 +14,7 @@ class Unit < ActiveRecord::Base
 	end
 
 	def self.normalize(value, unit=nil)
-		(value =~ /[^0-9]/) ? parse(value) : unit.normalize(value)
+		(value =~ /[a-zA-Z]/) ? parse(value) : unit.normalize(value)
 	end
 
 	def normalize(value)

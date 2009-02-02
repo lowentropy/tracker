@@ -3,15 +3,11 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :person_stats
 
-  map.resources :person_graphs
-
   map.resources :plots
 
   map.resources :graphs
 
   map.resources :stats
-
-  map.resources :unit_prefs
 
   map.resources :measurements
 

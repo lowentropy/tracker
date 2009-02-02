@@ -1,7 +1,5 @@
 class MeasurementsController < ApplicationController
 
-	before_filter :get_current_person
-
   # GET /measurements
   # GET /measurements.xml
   def index
@@ -44,7 +42,12 @@ class MeasurementsController < ApplicationController
   # POST /measurements.xml
   def create
 		@measurement = if params[:quick]
-			@person.quick params[:quick]
+			begin
+				@person.quick params[:quick]
+			rescue
+				flash[:notice] = $!.message
+				redirect_to(:back) and return
+			end
 		else
    		Measurement.new(params[:measurement])
 		end

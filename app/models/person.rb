@@ -4,19 +4,16 @@ class Person < ActiveRecord::Base
 	has_many :person_stats, :dependent => :destroy,
 													:order => :position, :include => :stat
 	has_many :stats, :through => :person_stats, :order => 'person_stats.position'
-	belongs_to :user
 
 	def stat(stat_or_name)
-		if stat_or_name.is_a? Stat
+		if stat_or_name.is_a? PersonStat
+			stat_or_name
+		elsif stat_or_name.is_a? Stat
 			person_stats.find_by_stat_id stat_or_name.id 
 		else
 			person_stats.find :first, :conditions =>
 				["stats.name LIKE ?", stat_or_name+'%']
 		end
-	end
-
-	def unused_stats
-		user.stats.reject {|stat| stats.include? stat}
 	end
 
 	def table(range=since_days_ago(10))
@@ -25,8 +22,9 @@ class Person < ActiveRecord::Base
 		end.extend DateTable
 	end
 
-	def measure(stat, time, value, unit=nil)
-		stat = self.stat(stat) unless stat.is_a? PersonStat
+	def measure(stat_or_name, time, value, unit=nil)
+		stat = self.stat(stat_or_name)
+		raise "unknown stat: #{stat_or_name}" unless stat
 		value = Unit.normalize(value, unit || stat.unit)
 		stat.measurements.create :measured_at => time, :value => value
 	end

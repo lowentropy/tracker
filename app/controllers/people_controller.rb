@@ -10,7 +10,7 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
-    @people = @user.people
+    @people = Person.find :all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -49,7 +49,6 @@ class PeopleController < ApplicationController
   # POST /people.xml
   def create
     @person = Person.new(params[:person])
-		@person.user_id = @user.id
 
     respond_to do |format|
       if @person.save

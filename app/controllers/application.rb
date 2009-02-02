@@ -35,18 +35,13 @@ private
 	end
 
 	def fake_login
-		session[:user_openid_url] ||= 'https://getopenid.com/lowentropy'
-		@user = User.find_by_openid_url session[:user_openid_url]
-	end
-
-	def get_current_person
-		session[:person_id] = params[:person] if params[:person]
-		@person = Person.find(session[:person_id]) if session[:person_id]
-		@person ||= @user.people.first
+		session[:person_id] ||= Person.find(:first).id
+		@person = Person.find session[:person_id]
 	end
 
 	def set_time_zone
-		Time.zone = @user.time_zone if @user
+		# TODO: uncomment
+		#Time.zone = @user.time_zone if @user
 	end
 
 end

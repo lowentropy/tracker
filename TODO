@@ -1,6 +1,7 @@
 - merge User/Person, and merge Stat/PersonStat
+- fix day summaries to use Xam
 - stop auto-updating, use an in-place edit of the
   whole stat instead
+- hook up SMS
 - allow user to create stat groups
 - import food data and implement tracking
-- find out how to hook up SMS
