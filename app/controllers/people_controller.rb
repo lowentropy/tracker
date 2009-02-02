@@ -1,5 +1,18 @@
 class PeopleController < ApplicationController
 
+  openid_enabled "Person"
+
+	skip_before_filter :login
+	before_filter :login, :only => :reorder_person_stats
+	before_filter :must_own_person, :only => [:show, :edit, :update, :delete]
+
+	# GET /people/1/logout
+	def logout
+		reset_session
+		redirect_to people_path
+	end
+
+	# POST /people/1/reorder_person_stats
 	def reorder_person_stats
 		params[:person_stats].each_with_index do |id,pos|
 			PersonStat.update(id, :position => pos+1)
@@ -10,19 +23,17 @@ class PeopleController < ApplicationController
   # GET /people
   # GET /people.xml
   def index
+		@person = logged_in_person
     @people = Person.find :all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @people }
     end
   end
 
   # GET /people/1
   # GET /people/1.xml
   def show
-    @person = Person.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @person }
@@ -42,7 +53,6 @@ class PeopleController < ApplicationController
 
   # GET /people/1/edit
   def edit
-    @person = Person.find(params[:id])
   end
 
   # POST /people
@@ -65,8 +75,6 @@ class PeopleController < ApplicationController
   # PUT /people/1
   # PUT /people/1.xml
   def update
-    @person = Person.find(params[:id])
-
     respond_to do |format|
       if @person.update_attributes(params[:person])
         flash[:notice] = 'Person was successfully updated.'
@@ -90,4 +98,27 @@ class PeopleController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+private
+
+	def login_redirect(openid_url)
+		session[:attempt] || measurements_path
+	end
+
+	def failed_login_redirect(state)
+		flash[:notice] = "OpenID login falure: #{state.class.name}"
+		people_path
+	end
+
+	# get the person by id, but also make sure it's the same as the
+	# user who logged in by openid.
+	def must_own_person
+		@person = Person.find params[:id]
+		if @person and @person.openid_url != session[:person_openid_url]
+			flash[:notice] = 'Wrong person or not logged in!'
+			redirect_to people_path
+			return false
+		end
+		true
+	end
 end

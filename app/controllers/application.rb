@@ -20,28 +20,27 @@ class ApplicationController < ActionController::Base
 private
 
 	def login
-		fake_login and return
+		#fake_login and return if ENV['RAILS_ENV'] == 'development'
 		session[:attempt] = request.url
-		if (url = session[:user_openid_url])
-			@user = User.find_by_openid_url session[:user_openid_url]
-			unless @user
-				flash[:notice] = 'Not a valid user, sorry.'
-				redirect_to '/users'
+		if (url = session[:person_openid_url])
+			@person = Person.find_by_openid_url url
+			unless @person
+				flash[:notice] = "#{url} is not a known OpenID."
+				redirect_to people_path
 			end
 		else
-			flash[:notice] = "Must log in to see #{request.url}"
-			redirect_to '/users'
+			flash[:notice] = "Must log in to see #{request.url}."
+			redirect_to people_path
 		end
 	end
 
 	def fake_login
-		session[:person_id] ||= Person.find(:first).id
-		@person = Person.find session[:person_id]
+		session[:person_openid_url] ||= Person.find(:first).openid_url
+		@person = Person.find_by_openid_url session[:person_openid_url]
 	end
 
 	def set_time_zone
-		# TODO: uncomment
-		#Time.zone = @user.time_zone if @user
+		Time.zone = @person.time_zone if @person
 	end
 
 end
