@@ -1,7 +1,5 @@
 class Email < ActiveRecord::Base
 
-	serialize :errors
-	
 	def activate
 		number = from[0,from.index('@')]
 		person = Person.find_by_phone_number number
@@ -12,12 +10,12 @@ class Email < ActiveRecord::Base
 			rescue
 				update_attributes(
 					:status => 'error',
-					:errors => [$!.message])
+					:errors => $!.message)
 			end
 		else
 			update_attributes(
 				:status => 'error',
-				:errors => ["no phone number: #{number}"])
+				:errors => "no phone number: #{number}")
 		end
 	end
 
