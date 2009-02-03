@@ -16,6 +16,10 @@ class Person < ActiveRecord::Base
 		end
 	end
 
+	def unused_stats
+		Stat.find :all, :conditions => ["id NOT IN (?)", stats.map {|s| s.id}]
+	end
+
 	def table(range=since_days_ago(10))
 		person_stats.visible.map do |stat|
 			stat.measurements.inside(range).group_by(&:day)
