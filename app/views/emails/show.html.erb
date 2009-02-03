@@ -1,0 +1,33 @@
+<p>
+  <b>From:</b>
+  <%=h @email.from %>
+</p>
+
+<p>
+  <b>To:</b>
+  <%=h @email.to %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%=h @email.subject %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%=h @email.body %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @email.status %>
+</p>
+
+<p>
+  <b>Errors:</b>
+  <%=h @email.errors %>
+</p>
+
+
+<%= link_to 'Edit', edit_email_path(@email) %> |
+<%= link_to 'Back', emails_path %>

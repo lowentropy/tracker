@@ -5,10 +5,20 @@
   <%= f.error_messages %>
 	<%= f.hidden_field :user_id, :value => @user.id %>
 
+	<p>
+		<%= f.label :openid_url %><br/>
+		<%= f.text_field :openid_url %>
+	</p>
+
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
+
+	<p>
+		<%= f.label :phone_number %> (optional)<br/>
+		<%= f.text_field :phone_number %>
+	</p>
 
   <p>
     <%= f.label :birth_date %><br />
