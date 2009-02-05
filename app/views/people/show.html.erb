@@ -8,5 +8,10 @@
   <%=h @person.birth_date %>
 </p>
 
+<p>
+	<b>API Key:</b>
+	<%=h @person.api_key %>
+</p>
+
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
