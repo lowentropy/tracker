@@ -1,7 +1,7 @@
 class Unit < ActiveRecord::Base
 
 	belongs_to :dimension
-	has_many :person_stats # don't delete
+	has_many :stats # don't delete
 
 	def self.parse(amount)
 		idx = amount.rindex ' '

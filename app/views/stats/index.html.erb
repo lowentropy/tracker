@@ -2,16 +2,22 @@
 
 <table>
   <tr>
-    <th>Dimension</th>
     <th>Name</th>
-    <th>Description</th>
+    <th>Dimension</th>
+		<th>Unit</th>
+		<th>Decimal Places</th>
+		<th>Summary Mode</th>
+		<th>Visible</th>
   </tr>
 
 <% for stat in @stats %>
   <tr>
-    <td><%=h stat.dimension.name %></td>
     <td><%=h stat.name %></td>
-    <td>...</td>
+    <td><%=h stat.dimension.name %></td>
+    <td><%=h stat.unit.long_name %></td>
+		<td><%=h stat.decimal_places %></td>
+    <td><%=h stat.summary_mode.name %></td>
+    <td><%=h stat.visible? %></td>
     <td><%= link_to 'Show', stat %></td>
     <td><%= link_to 'Edit', edit_stat_path(stat) %></td>
     <td><%= link_to 'Destroy', stat, :confirm => 'Are you sure?', :method => :delete %></td>

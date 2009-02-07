@@ -4,13 +4,38 @@
   <%= f.error_messages %>
 
   <p>
-    <%= f.label :dimension_id %><br />
-    <%= f.collection_select :dimension_id, Dimension.find(:all), :id, :name %>
-  </p>
-  <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
+  <p>
+    <%= f.label :dimension_id %><br />
+    <%= f.collection_select :dimension_id, Dimension.find(:all), :id, :name,
+					{:prompt => true},
+					:onchange => remote_function(
+						:update => 'stat_unit_id',
+						:url => {
+							:controller => 'units',
+							:action => 'index'},
+						:with => "'dimension_id='+$('stat_dimension_id').value",
+						:method => :get) %>
+  </p>
+	<p>
+		<%= f.label :unit_id %><br />
+		<%= f.collection_select :unit_id, @stat.dimension.units, :id, :long_name %>
+	</p>
+	<p>
+		<%= f.label :decimal_places %><br />
+		<%= f.text_field :decimal_places %>
+	</p>
+	<p>
+		<%= f.label :summary_mode %><br />
+		<%= f.collection_select :summary_mode_id,
+					SummaryMode.find(:all), :id, :name %>
+	</p>
+	<p>
+		<%= f.label :visible %><br />
+		<%= f.check_box :visible %>
+	</p>
   <p>
     <%= f.label :description %><br />
     <%= f.text_area :description %>

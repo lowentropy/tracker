@@ -3,8 +3,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :summary_modes
 
-  map.resources :person_stats
-
   map.resources :plots
 
   map.resources :graphs

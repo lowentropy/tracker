@@ -1,27 +1,19 @@
 class Person < ActiveRecord::Base
 
 	has_many :person_graphs, :dependent => :destroy
-	has_many :person_stats, :dependent => :destroy,
-													:order => :position, :include => :stat
-	has_many :stats, :through => :person_stats, :order => 'person_stats.position'
+	has_many :stats, :dependent => :destroy, :order => :position
 
 	def stat(stat_or_name)
-		if stat_or_name.is_a? PersonStat
+		if stat_or_name.is_a? Stat
 			stat_or_name
-		elsif stat_or_name.is_a? Stat
-			person_stats.find_by_stat_id stat_or_name.id 
 		else
-			person_stats.find :first, :conditions =>
-				["stats.name LIKE ?", stat_or_name+'%']
+			stats.find :first, :conditions =>
+				["name LIKE ?", stat_or_name+'%']
 		end
 	end
 
-	def unused_stats
-		Stat.find :all, :conditions => ["id NOT IN (?)", stats.map {|s| s.id}]
-	end
-
 	def table(range=since_days_ago(10))
-		person_stats.visible.map do |stat|
+		stats.visible.map do |stat|
 			stat.measurements.inside(range).group_by(&:day)
 		end.extend DateTable
 	end

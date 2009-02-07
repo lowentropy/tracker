@@ -13,5 +13,25 @@
 	<%=h @person.api_key %>
 </p>
 
+<p>
+	<b>Stats</b>
+	(drag to reorder)
+
+	<% modes = SummaryMode.find(:all) -%>
+	<% sort_list(@person, :stats) do |stat| -%>
+		<% if stat.visible? -%>
+			<b><%=h stat.name.capitalize %></b>
+		<% else -%>
+			<%=h stat.name.capitalize %>
+		<% end -%>
+		<%= link_to 'edit', edit_stat_path(stat) %>
+		<%= link_to 'del', stat, :confirm => 'Sure?', :method => :delete %>
+	<% end -%>
+
+	<%= link_to 'Create new stat', new_stat_path %>
+
+</p>
+
+
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>

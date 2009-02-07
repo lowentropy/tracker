@@ -1,13 +1,12 @@
 class Measurement < ActiveRecord::Base
 
-	belongs_to :person_stat
+	belongs_to :stat
 
 	named_scope :of, lambda {|stat|
 		if stat.is_a? String
-			{ :joins => :stat,
-				:conditions => ["stats.name = ?", stat] }
+			{ :conditions => ["stats.name = ?", stat] }
 		else
-			{ :conditions => { :person_stat => stat } }
+			{ :conditions => { :stat => stat } }
 		end
 	}
 
@@ -24,7 +23,7 @@ class Measurement < ActiveRecord::Base
 	end
 
 	def trim(value)
-		"%.#{person_stat.decimal_places}f" % value
+		"%.#{stat.decimal_places}f" % value
 	end
 
 	def in(unit)

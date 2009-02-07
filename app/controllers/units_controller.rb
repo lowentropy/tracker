@@ -2,12 +2,22 @@ class UnitsController < ApplicationController
   # GET /units
   # GET /units.xml
   def index
-    @units = Unit.find(:all)
+		# if dim id present, we're doing a select update via ajax
+		if params[:dimension_id]
+			@units = Unit.find_all_by_dimension_id params[:dimension_id]
+			options = @units.map do |unit|
+				"<option value=\"#{unit.id}\">#{unit.long_name}</option>"
+			end.join("\n")
+			render :text => options
+			return true
+		else
+			@units = Unit.find(:all)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @units }
-    end
+			respond_to do |format|
+				format.html # index.html.erb
+				format.xml  { render :xml => @units }
+			end
+		end
   end
 
   # GET /units/1

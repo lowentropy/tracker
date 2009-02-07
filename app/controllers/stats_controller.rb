@@ -62,7 +62,7 @@ class StatsController < ApplicationController
     respond_to do |format|
       if @stat.update_attributes(params[:stat])
         flash[:notice] = 'Stat was successfully updated.'
-        format.html { redirect_to(@stat) }
+        format.html { redirect_to(@person)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
