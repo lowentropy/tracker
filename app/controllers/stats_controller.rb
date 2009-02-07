@@ -41,6 +41,7 @@ class StatsController < ApplicationController
   # POST /stats.xml
   def create
     @stat = Stat.new(params[:stat])
+		@stat.person_id = @person.id
 
     respond_to do |format|
       if @stat.save
