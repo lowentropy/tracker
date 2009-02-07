@@ -12,10 +12,10 @@ class PeopleController < ApplicationController
 		redirect_to people_path
 	end
 
-	# POST /people/1/reorder_person_stats
-	def reorder_person_stats
-		params[:person_stats].each_with_index do |id,pos|
-			PersonStat.update(id, :position => pos+1)
+	# POST /people/1/reorder_stats
+	def reorder_stats
+		params[:stats].each_with_index do |id,pos|
+			Stat.update(id, :position => pos+1)
 		end
 		render :nothing => true
 	end
