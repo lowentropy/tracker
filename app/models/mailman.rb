@@ -5,8 +5,7 @@ class Mailman < ActionMailer::Base
 			:subject => email.subject,
 			:from => email.from.first,
 			:to => email.to.first,
-			:body => email.body,
-			:errors => "")
+			:body => email.body)
 		email.activate
 	end
 

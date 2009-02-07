@@ -6,16 +6,16 @@ class Email < ActiveRecord::Base
 		if person
 			begin
 				person.quick body
-				update_attributes :stats => 'success'
+				update_attributes :status => 'success'
 			rescue
 				update_attributes(
 					:status => 'error',
-					:errors => $!.message)
+					:error => $!.message)
 			end
 		else
 			update_attributes(
 				:status => 'error',
-				:errors => "no phone number: #{number}")
+				:error => "no phone number: #{number}")
 		end
 	end
 
