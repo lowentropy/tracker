@@ -1,5 +1,7 @@
 class Stat < ActiveRecord::Base
 
+	acts_as_list :scope => :person
+
 	belongs_to :dimension
 	belongs_to :person
 	belongs_to :unit
