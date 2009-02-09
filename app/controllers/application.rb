@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 private
 
 	def login
-		fake_login and return if ENV['RAILS_ENV'] == 'development'
+		#fake_login and return if ENV["RAILS_ENV"] == 'development'
 		session[:attempt] = request.url
 		if (url = session[:person_openid_url])
 			@person = Person.find_by_openid_url url

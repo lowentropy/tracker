@@ -63,8 +63,8 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        flash[:notice] = 'Person was successfully created.'
-        format.html { redirect_to(@person) }
+        flash[:notice] = 'Ok, now log in!'
+        format.html { redirect_to(people_path) }
         format.xml  { render :xml => @person, :status => :created, :location => @person }
       else
         format.html { render :action => "new" }

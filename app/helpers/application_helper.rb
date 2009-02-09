@@ -1,6 +1,11 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
 
+	def dev_mode
+		#ENV['RAILS_ENV'] == 'development'
+		false
+	end
+
 	def sort_list(object, list_attr, list_options={}, item_options={}, &block)
 		concat(
 			content_tag(:ul, list_options.merge(:id => list_attr)) do
