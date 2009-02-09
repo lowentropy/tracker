@@ -2,6 +2,7 @@ module DateTable
 	
 	def each_row(&block)
 		table = map {|col| col.to_a.reverse}
+		return if table.empty?
 		while true
 			top = table.map do |col|
 				col.any? ? col[0][0] : ''
