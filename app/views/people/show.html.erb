@@ -4,6 +4,11 @@
 </p>
 
 <p>
+	<b>Day Starts At:</b>
+	<%=h @person.first_hour %>
+</p>
+
+<p>
   <b>Birth date:</b>
   <%=h @person.birth_date %>
 </p>
@@ -28,10 +33,9 @@
 		<%= link_to 'del', stat, :confirm => 'Sure?', :method => :delete %>
 	<% end -%>
 
-	<%= link_to 'Create new stat', new_stat_path %>
-
 </p>
 
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %>
+<%= link_to 'Back', people_path %> |
+<%= link_to 'Create new stat', new_stat_path %>

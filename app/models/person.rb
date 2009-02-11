@@ -1,6 +1,6 @@
 class Person < ActiveRecord::Base
 
-	has_many :person_graphs, :dependent => :destroy
+	has_many :graphs, :dependent => :destroy
 	has_many :stats, :dependent => :destroy, :order => :position
 
 	def stat(stat_or_name)
@@ -49,6 +49,14 @@ class Person < ActiveRecord::Base
 		# throw out bad sentences
 		throw "invalid sentence" if words.size != 1
 		measure words[0], time, value
+	end
+
+	def first_hour
+		day_begins_at.strftime '%l%P'
+	end
+
+	def first_hour=(hour)
+		self.day_begins_at = Time.parse(hour)
 	end
 
 private

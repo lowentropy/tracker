@@ -5,6 +5,13 @@ module ApplicationHelper
 		ENV['RAILS_ENV'] == 'development'
 	end
 
+	def hours_of_day
+		nums = [12, *(1..11).to_a]
+		ams = nums.map {|i| "#{i}am"}
+		pms = nums.map {|i| "#{i}pm"}
+		ams + pms
+	end
+
 	def sort_list(object, list_attr, list_options={}, item_options={}, &block)
 		concat(
 			content_tag(:ul, list_options.merge(:id => list_attr)) do
