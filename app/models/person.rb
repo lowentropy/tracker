@@ -12,7 +12,7 @@ class Person < ActiveRecord::Base
 		end
 	end
 
-	def table(range=since_days_ago(10))
+	def table(range=since_days_ago(30))
 		stats.visible.map do |stat|
 			stat.measurements.inside(range).group_by(&:day)
 		end.extend DateTable

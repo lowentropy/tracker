@@ -15,7 +15,11 @@ class Measurement < ActiveRecord::Base
 	}
 
 	def day
-		measured_at.strftime('%Y-%m-%d')
+		adjusted_date(measured_at).strftime('%Y-%m-%d')
+	end
+
+	def adjusted_date(datetime)
+		(datetime - stat.person.day_begins_at.hour.hours).to_date
 	end
 
 	def short_time

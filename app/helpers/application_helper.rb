@@ -2,8 +2,7 @@
 module ApplicationHelper
 
 	def dev_mode
-		#ENV['RAILS_ENV'] == 'development'
-		false
+		ENV['RAILS_ENV'] == 'development'
 	end
 
 	def sort_list(object, list_attr, list_options={}, item_options={}, &block)
