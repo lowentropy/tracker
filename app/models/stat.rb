@@ -7,7 +7,7 @@ class Stat < ActiveRecord::Base
 	belongs_to :unit
 	belongs_to :summary_mode
 
-	has_many :measurements, :dependent => :destroy
+	has_many :measurements, :order => 'measured_at', :dependent => :destroy
 	has_many :plots, :dependent => :destroy
 	has_many :units, :through => :dimension
 
