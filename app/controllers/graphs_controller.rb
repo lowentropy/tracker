@@ -1,4 +1,5 @@
 class GraphsController < ApplicationController
+
   # GET /graphs
   # GET /graphs.xml
   def index
@@ -15,8 +16,8 @@ class GraphsController < ApplicationController
   def show
     @graph = Graph.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
+		respond_to do |format|
+			format.html	# show.html.erb
       format.xml  { render :xml => @graph }
     end
   end
@@ -82,4 +83,5 @@ class GraphsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end

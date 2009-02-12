@@ -1,6 +1,6 @@
-- fix day summaries to use Xam
-- stop auto-updating, use an in-place edit of the
-  whole stat instead
-- hook up SMS
-- allow user to create stat groups
+- BUG: order day's meas. by time... now is by id?
+- single-stat graphs
+- stat groups
+- group graphs
+- custom graphs
 - import food data and implement tracking
