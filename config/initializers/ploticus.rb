@@ -6,12 +6,13 @@ class Ploticus
 		#@options = "-croprel 0.01,0.015,0.01,-0.025"
 		@options = ""
 	end
-	def script(&block)
+	def script(opts={}, &block)
+		opts.each {|k,v| eval "@#{k} = v"}
 		instance_eval &block
 		self
 	end
-	def self.script(&block)
-		self.new.script &block
+	def self.script(*args, &block)
+		self.new.script *args, &block
 	end
 	def render(format=:svg)
 		f = IO.popen("ploticus -stdin -o stdout -#{format} #{options}", "w+")
@@ -61,7 +62,7 @@ protected
 	end
 	def cmd(name, *args)
 		name = "#{@group}.#{name}" if @group
-		meta(name+':', *args)
+		meta("#{name}:", *args)
 	end
 	def format(arg)
 		if arg.is_a? Hash

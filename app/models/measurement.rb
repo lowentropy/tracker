@@ -18,6 +18,17 @@ class Measurement < ActiveRecord::Base
 		adjusted_date(measured_at).strftime('%Y-%m-%d')
 	end
 
+	def week
+		d = adjusted_date(measured_at)
+		w = d.beginning_of_week
+		w.strftime('%Y-%m-%d')
+	end
+
+	def day_of_week
+		d = adjusted_date(measured_at)
+		(d - d.beginning_of_week).to_i
+	end
+
 	def adjusted_date(datetime)
 		(datetime - stat.person.day_begins_at.hour.hours).to_date
 	end
