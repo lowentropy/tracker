@@ -13,13 +13,16 @@ class Person < ActiveRecord::Base
 		end
 	end
 
+	# default number of days to include in tables, graphs
+	def default_range
+		30
+	end
+
 	# return a table of measurements in the given range.
 	# the returned table includes DateTable, allowing the
 	# entries to be traversed in parallel.
-	def table(range=since_days_ago(30))
-		stats.visible.map do |stat|
-			stat.measurements.inside(range).group_by(&:day)
-		end.extend DateTable
+	def table(range=since_days_ago(default_range))
+		DateTable.new(self, range)
 	end
 
 	# record a measurement on a particular statistic. the

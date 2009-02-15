@@ -14,18 +14,20 @@ class Measurement < ActiveRecord::Base
 		{ :conditions => {:measured_at => utc_bound(range)} }
 	}
 
-	def day
-		adjusted_date(measured_at).strftime('%Y-%m-%d')
+	def date
+		adjusted_date(measured_at)
 	end
 
-	def week
-		d = adjusted_date(measured_at)
-		w = d.beginning_of_week
-		w.strftime('%Y-%m-%d')
+	def day(format="%Y-%m-%d")
+		date.strftime(format)
+	end
+
+	def week(format="%Y-%m-%d")
+		date.beginning_of_week.strftime(format)
 	end
 
 	def day_of_week
-		d = adjusted_date(measured_at)
+		d = date
 		(d - d.beginning_of_week).to_i
 	end
 
