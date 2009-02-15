@@ -3,11 +3,15 @@ class Ploticus
 	attr_accessor :options
 	def initialize
 		@output = ""
-		@debug = true
-		@options = "-croprel 0.01,0.015,0.01,-0.025"
+		#@options = "-croprel 0.01,0.015,0.01,-0.025"
+		@options = ""
 	end
 	def script(&block)
 		instance_eval &block
+		self
+	end
+	def self.script(&block)
+		self.new.script &block
 	end
 	def render(format=:svg)
 		f = IO.popen("ploticus -stdin -o stdout -#{format} #{options}", "w+")
@@ -32,23 +36,32 @@ protected
 		self << ""
 	end
 	def if_(*args, &block)
-		cmd("#if", *args)
+		meta "#if", *args
 		instance_eval &block
-		cmd("#endif")
+		meta "#endif"
+	end
+	def procdef(name, &block)
+		self << "#procdef #{name}"
+		instance_eval &block
+		self << ""
 	end
 	def clone(name)
-		cmd("#clone", name)
+		meta "#clone", name
 	end
 	def saveas(name)
-		cmd("#saveas", name)
+		meta "#saveas", name
 	end
 	def group(name, &block)
-		@group = name
+		old_group, @group = @group, name
 		instance_eval &block
+		@group = old_group
+	end
+	def meta(name, *args)
+		self << "  #{name} #{format(args)}"
 	end
 	def cmd(name, *args)
-		name = "#{@group}.name" if @group
-		self << "  #{name}: #{format(args)}"
+		name = "#{@group}.#{name}" if @group
+		meta(name+':', *args)
 	end
 	def format(arg)
 		if arg.is_a? Hash
