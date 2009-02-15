@@ -3,6 +3,7 @@ class Person < ActiveRecord::Base
 	has_many :graphs, :dependent => :destroy
 	has_many :stats, :dependent => :destroy, :order => :position
 
+	# look up the stat by a partial name
 	def stat(stat_or_name)
 		if stat_or_name.is_a? Stat
 			stat_or_name
@@ -12,12 +13,18 @@ class Person < ActiveRecord::Base
 		end
 	end
 
+	# return a table of measurements in the given range.
+	# the returned table includes DateTable, allowing the
+	# entries to be traversed in parallel.
 	def table(range=since_days_ago(30))
 		stats.visible.map do |stat|
 			stat.measurements.inside(range).group_by(&:day)
 		end.extend DateTable
 	end
 
+	# record a measurement on a particular statistic. the
+	# unit of measurement can be overridden. both the stat and
+	# unit parameters can be names or records.
 	def measure(stat_or_name, time, value, unit=nil)
 		stat = self.stat(stat_or_name)
 		raise "unknown stat: #{stat_or_name}" unless stat
@@ -51,10 +58,12 @@ class Person < ActiveRecord::Base
 		measure words[0], time, value
 	end
 
+	# user-configured first hour of the day, formatted as '6am'
 	def first_hour
 		day_begins_at.strftime '%l%P'
 	end
 
+	# set the first hour of the day; any valid time format
 	def first_hour=(hour)
 		self.day_begins_at = Time.parse(hour)
 	end
@@ -164,6 +173,7 @@ class Person < ActiveRecord::Base
 
 private
 
+	# get a range of days from num days ago to present
 	def since_days_ago(num)
 		num.days.ago.to_date .. Date.today
 	end
