@@ -1,6 +1,11 @@
 class DateTable
 
+	attr_reader :person
+	attr_reader :range
+
 	def initialize(person, range, include_all=false)
+		@range = range
+		@person = person
 		@stats = person.stats
 		@stats = @stats.visible unless include_all
 		@data = @stats.map do |stat|
@@ -53,6 +58,16 @@ class DateTable
 		daily(stat_or_name).each &block
 	end
 
+	# return number of weeks in weekly range
+	def num_weeks
+		(num_days + 6) / 7
+	end
+
+	# return number of days in daily range
+	def num_days
+		(range.begin - range.end).to_i + 1
+	end
+
 private
 
 	# get measurements of a particular stat
@@ -82,7 +97,30 @@ private
 	# passed to the constructor, regardless of whether data is available
 	# in parts of that range.
 	def weekify(stat, measurements)
-		# TODO
+		days = []
+		# iterated by measurements grouped by days
+		last = range.begin.beginning_of_week
+		measurements.group_by(&:date).each do |date,meas|
+			# insert missing days until measurement date
+			skipped = (date - last).to_i
+			skipped.times do
+				days << [last, [nil]]
+				last = last.tomorrow
+			end
+			# insert these measurements
+			days << [last, [stat.summarize(meas), *meas]]
+		end
+		# insert missing days until range end
+		final = range.end.end_of_week
+		until last == final
+			days << [last, [nil]]
+			last = last.tomorrow
+		end
+		# group into weeks and remove daily dates
+		weeks = days.in_groups_of(7).map do |week|
+			[week[0][0], week.map {|d| d[1]}]
+		end
+		ActiveSupport::OrderedHash.new(weeks)
 	end
 	
 	# returns a one-dimensional array of daily summary of a SINGLE stat.
