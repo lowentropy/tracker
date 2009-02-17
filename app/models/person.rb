@@ -199,7 +199,7 @@ class Person < ActiveRecord::Base
 				# add summary data to list (centered in cell)
 				data << [i + 0.5, summary, week_id]
 				# each hour's measurements are stacked
-				measurements.group_by(&:hour).each do |hour,meas|
+				measurements.group_by(&:adjusted_hour).each do |hour,meas|
 					values = meas.map {|m| m.denormalized}
 					loc, len = hour, values.sum
 					# stack cumulative bars last-to-first
