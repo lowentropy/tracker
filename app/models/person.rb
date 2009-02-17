@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
 
 	has_many :graphs, :dependent => :destroy
 	has_many :stats, :dependent => :destroy, :order => :position
+	has_many :groups, :dependent => :destroy, :order => :position
 	has_many :measurements, :through => :stats, :order => 'measured_at'
 
 	# look up the stat by a partial name

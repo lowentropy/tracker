@@ -32,10 +32,20 @@
 		<%= link_to 'edit', edit_stat_path(stat) %>
 		<%= link_to 'del', stat, :confirm => 'Sure?', :method => :delete %>
 	<% end -%>
-
 </p>
+<%= link_to 'Create new stat', new_stat_path %><br/>
 
+<p>
+	<b>Groups</b>
+	(drag to reorder)
+
+	<% sort_list(@person, :groups) do |group| -%>
+		<%=h group.name.capitalize %>
+		<%= link_to 'edit', edit_group_path(group) %>
+		<%= link_to 'del', group, :confirm => 'Sure?', :method => :delete %>
+	<% end %>
+</p>
+<%= link_to 'Create new group', new_group_path %><br/>
 
 <%= link_to 'Edit', edit_person_path(@person) %> |
-<%= link_to 'Back', people_path %> |
-<%= link_to 'Create new stat', new_stat_path %>
+<%= link_to 'Back', people_path %>

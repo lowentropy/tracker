@@ -20,6 +20,14 @@ class PeopleController < ApplicationController
 		render :nothing => true
 	end
 
+	# POST /people/1/reorder_groups
+	def reorder_groups
+		params[:groups].each_with_index do |id,pos|
+			Group.update(id, :position => pos+1)
+		end
+		render :nothing => true
+	end
+
   # GET /people
   # GET /people.xml
   def index

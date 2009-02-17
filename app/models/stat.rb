@@ -6,6 +6,7 @@ class Stat < ActiveRecord::Base
 	belongs_to :person
 	belongs_to :unit
 	belongs_to :summary_mode
+	belongs_to :group
 
 	has_many :measurements, :order => 'measured_at', :dependent => :destroy
 	has_many :plots, :dependent => :destroy
