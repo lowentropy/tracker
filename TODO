@@ -1,4 +1,4 @@
-- BUG: order day's meas. by time... now is by id?
+- BUG: add date should behave as group date
 - single-stat graphs
 - stat groups
 - group graphs

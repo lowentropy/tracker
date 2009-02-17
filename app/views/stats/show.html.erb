@@ -33,5 +33,7 @@
 	<%=h @stat.visible? %>
 </p>
 
+<%= image_tag "/stats/plot/#{@stat.id}.svg" %>
+
 <%= link_to 'Edit', edit_stat_path(@stat) %> |
 <%= link_to 'Back', @person %>

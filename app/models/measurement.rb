@@ -14,8 +14,25 @@ class Measurement < ActiveRecord::Base
 		{ :conditions => {:measured_at => utc_bound(range)} }
 	}
 
-	def day
-		adjusted_date(measured_at).strftime('%Y-%m-%d')
+	def date
+		adjusted_date(measured_at)
+	end
+
+	def hour
+		measured_at.hour
+	end
+
+	def day(format="%Y-%m-%d")
+		date.strftime(format)
+	end
+
+	def week(format="%Y-%m-%d")
+		date.beginning_of_week.strftime(format)
+	end
+
+	def day_of_week
+		d = date
+		(d - d.beginning_of_week).to_i
 	end
 
 	def adjusted_date(datetime)
@@ -28,6 +45,10 @@ class Measurement < ActiveRecord::Base
 
 	def trim(value)
 		"%.#{stat.decimal_places}f" % value
+	end
+
+	def denormalized
+		stat.unit.denormalize value
 	end
 
 	def in(unit)

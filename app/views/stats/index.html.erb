@@ -14,9 +14,9 @@
   <tr>
     <td><%=h stat.name %></td>
     <td><%=h stat.dimension.name %></td>
-    <td><%=h stat.unit.long_name %></td>
+    <td><%h stat.unit ? stat.unit.long_name : '(none)' %></td>
 		<td><%=h stat.decimal_places %></td>
-    <td><%=h stat.summary_mode.name %></td>
+    <td><%=h stat.summary_mode ? stat.summary_mode.name : '(none)' %></td>
     <td><%=h stat.visible? %></td>
     <td><%= link_to 'Show', stat %></td>
     <td><%= link_to 'Edit', edit_stat_path(stat) %></td>
