@@ -40,7 +40,7 @@ class Measurement < ActiveRecord::Base
 	end
 
 	def adjusted_hour
-		(hour - stat.person.first_hour) % 24
+		(hour - stat.person.day_begins_at.hour) % 24
 	end
 
 	def short_time
