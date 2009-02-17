@@ -1,7 +1,7 @@
 <h1>Logs for <%= link_to @person.name, @person %></h1>
 <% table = @person.table -%>
 
-<% form_tag do |f| %>
+<% form_tag do %>
 	<%= text_field_tag 'quick' %>
 	<%= submit_tag 'add' %>
 <% end %>
