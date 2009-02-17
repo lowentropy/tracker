@@ -18,6 +18,10 @@ class Measurement < ActiveRecord::Base
 		adjusted_date(measured_at)
 	end
 
+	def hour
+		measured_at.hour
+	end
+
 	def day(format="%Y-%m-%d")
 		date.strftime(format)
 	end
@@ -41,6 +45,10 @@ class Measurement < ActiveRecord::Base
 
 	def trim(value)
 		"%.#{stat.decimal_places}f" % value
+	end
+
+	def denormalized
+		stat.unit.denormalize value
 	end
 
 	def in(unit)

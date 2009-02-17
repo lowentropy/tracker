@@ -27,42 +27,38 @@ class Ploticus
 		format = file[file.rindex('.')+1..-1]
 		File.open(file,'w') {|f| f.write(render(format))}
 	end
-protected
-	def data(data)
-		cmd(:data, data.map {|row| row.join(' ')}.join("\n        "))
+	def format_data(data)
+		data.map do |row|
+			row.is_a?(Array) ? row.join(' ') : row.to_s
+		end.join("\n        ")
 	end
+protected
 	def proc_(name, &block)
+		oldp, @proc = @proc, name
 		self << "#proc #{name}"
 		instance_eval &block
 		self << ""
-	end
-	def if_(*args, &block)
-		meta "#if", *args
-		instance_eval &block
-		meta "#endif"
-	end
-	def procdef(name, &block)
-		self << "#procdef #{name}"
-		instance_eval &block
-		self << ""
-	end
-	def clone(name)
-		meta "#clone", name
-	end
-	def saveas(name)
-		meta "#saveas", name
+		@proc = oldp
 	end
 	def group(name, &block)
 		old_group, @group = @group, name
 		instance_eval &block
 		@group = old_group
 	end
-	def meta(name, *args)
-		self << "  #{name} #{format(args)}"
+	def meta(name, *args, &block)
+		pre = @proc ? "  " : ""
+		self << "#{pre}##{name} #{format(args)}"
+		if block
+			oldp, @proc = @proc, name
+			instance_eval &block
+			self << ""
+			@proc = oldp
+		end
 	end
 	def cmd(name, *args)
 		name = "#{@group}.#{name}" if @group
-		meta("#{name}:", *args)
+		data = format(args)
+		self << "  #{name}: #{data}"
 	end
 	def format(arg)
 		if arg.is_a? Hash
@@ -74,10 +70,13 @@ protected
 		end
 	end
 	def method_missing(id, *args, &block)
-		if block
-			self.proc_(id.id2name, &block)
+		name = id.id2name
+		if name.starts_with? '_'
+			meta(name[1..-1], *args, &block)
+		elsif block
+			proc_(name, &block)
 		else
-			self.cmd(id.id2name, *args)
+			cmd(name, *args)
 		end
 	end
 end

@@ -13,7 +13,7 @@
 	<tr>
 		<th>Day</th>
 	<% stats.each do |stat| -%>
-		<th><%=h stat.name.capitalize %></th>
+		<th><%= link_to stat.name.capitalize, "/stats/plot/#{stat.id}.svg" %></th>
 	<% end -%>
 	</tr>
 <% table.each_row do |day,row| -%>

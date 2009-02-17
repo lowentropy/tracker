@@ -60,12 +60,14 @@ class DateTable
 
 	# return number of weeks in weekly range
 	def num_weeks
-		(num_days + 6) / 7
+		last = range.end.end_of_week
+		first = range.begin.beginning_of_week
+		((last - first).to_i + 1) / 7
 	end
 
 	# return number of days in daily range
 	def num_days
-		(range.begin - range.end).to_i + 1
+		(range.end - range.begin).to_i + 1
 	end
 
 private
@@ -80,14 +82,14 @@ private
 	# get or construct the weekly summary view of a stat
 	def weekly(stat_or_name)
 		stat = person.stat(stat_or_name)
-		measurements = @measurements[@stats.index(stat)]
+		measurements = @data[@stats.index(stat)]
 		@weekly[stat.id] ||= weekify(stat, measurements)
 	end
 
 	# get or construct the daily summary view of a stat
 	def daily(stat_or_name)
 		stat = person.stat(stat_or_name)
-		measurements = @measurements[@stats.index(stat)]
+		measurements = @data[@stats.index(stat)]
 		@daily[stat.id] ||= dayify(stat, measurements)
 	end
 
@@ -109,10 +111,12 @@ private
 			end
 			# insert these measurements
 			days << [last, [stat.summarize(meas), *meas]]
+			last = last.tomorrow
 		end
 		# insert missing days until range end
 		final = range.end.end_of_week
-		until last == final
+		skipped = (final - last).to_i + 1
+		skipped.times do
 			days << [last, [nil]]
 			last = last.tomorrow
 		end

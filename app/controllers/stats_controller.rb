@@ -21,6 +21,15 @@ class StatsController < ApplicationController
     end
   end
 
+	# GET /stats/1/plot.svg
+	def plot
+		@stat = Stat.find params[:id]
+		respond_to do |format|
+			image = @person.plot_weekly(@person.table, @stat)
+			format.svg  { render :text => image }
+		end
+	end
+
   # GET /stats/new
   # GET /stats/new.xml
   def new
