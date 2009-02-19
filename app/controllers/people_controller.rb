@@ -67,6 +67,10 @@ class PeopleController < ApplicationController
   # POST /people.xml
   def create
     @person = Person.new(params[:person])
+		unless @person.openid_url.ends_with? '/'
+			@person.openid_url << '/'
+		end
+
 		@person.api_key = UID.random
 
     respond_to do |format|
