@@ -20,6 +20,13 @@ class Person < ActiveRecord::Base
 		(measurements.first.measured_at.to_date..Date.today)
 	end
 
+	# return the range of dates for which values of the given
+	# stat were recorded
+	def stat_range(stat_or_name)
+		first = stat(stat_or_name).measurements.first
+		(first.measured_at.to_date..Date.today)
+	end
+
 	# return a table of measurements in the given range.
 	# the returned table includes DateTable, allowing the
 	# entries to be traversed in parallel.

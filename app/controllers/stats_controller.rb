@@ -25,7 +25,8 @@ class StatsController < ApplicationController
 	def plot
 		@stat = Stat.find params[:id]
 		respond_to do |format|
-			image = @person.plot_weekly(@person.table, @stat)
+			table = @person.table(@person.stat_range(@stat))
+			image = @person.plot_weekly(table, @stat)
 			format.svg  { render :text => image }
 		end
 	end
