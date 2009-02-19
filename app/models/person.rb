@@ -34,33 +34,52 @@ class Person < ActiveRecord::Base
 		stat = self.stat(stat_or_name)
 		raise "unknown stat: #{stat_or_name}" unless stat
 		value = Unit.normalize(value, unit || stat.unit)
-		stat.measurements.create :measured_at => time, :value => value
+		stat.measurements.new :measured_at => time, :value => value
 	end
 
 	# quick-add. format: [<num> [<unit>]] <stat> [(at|@) <time>]
 	def quick(sentence)
-		words = sentence.split(/\s+/)
-		
+
 		# use the explicitly given date/time
 		time = DateTime.now
-		if i = words.index('at') || words.index('@')
-			time = adjust_user_time words[i+1..-1].join(' ')
-			words = words[0...i]
+		if i = sentence.index('at') || sentence.index('@')
+			text = sentence[sentence.index(' ', i)..-1]
+			time = adjust_user_time text
+			sentence = sentence[0...i].strip
 		end
 
-		# use the explicitly given numeric value
-		value = 1.0
-		if words[0].to_f != 0.0
-			value = words.shift.to_f
-			# modify the value with an explicitly given unit
-			if words.size > 1
-				value = "#{value} #{words.shift}"
+		# split into separate entries
+		entries = sentence.split /[,;]/
+		
+		# map to measurements
+		measurements = entries.map do |entry|
+			# split into words
+			words = entry.strip.split(/\s+/)
+
+			# use the explicitly given numeric value
+			value = 1.0
+			if words[0].to_f != 0.0
+				value = words.shift.to_f
+				# modify the value with an explicitly given unit
+				if words.size > 1
+					value = "#{value} #{words.shift}"
+				end
+			end
+			
+			# throw out bad sentences
+			throw "invalid entry: #{entry}" if words.size != 1
+
+			# convert the entry into a measurement
+			measure words[0], time, value
+		end
+
+		# save all measurements, or none
+		measurements.each_with_index do |measurement,i|
+			unless measurement.save
+				measurements[0...i].each {|m| m.destroy}
+				throw "failed to save entry: #{entries[i]}"
 			end
 		end
-
-		# throw out bad sentences
-		throw "invalid sentence" if words.size != 1
-		measure words[0], time, value
 	end
 
 	# turn user-entered time into actual time. straightforward use

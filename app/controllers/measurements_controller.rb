@@ -41,15 +41,15 @@ class MeasurementsController < ApplicationController
   # POST /measurements
   # POST /measurements.xml
   def create
-		@measurement = if params[:quick]
+		if params[:quick]
 			begin
 				@person.quick params[:quick]
 			rescue
 				flash[:notice] = $!.message
-				redirect_to(:back) and return
 			end
+			redirect_to(:back) and return
 		else
-   		Measurement.new(params[:measurement])
+   		@measurement = Measurement.new(params[:measurement])
 		end
 
     respond_to do |format|
