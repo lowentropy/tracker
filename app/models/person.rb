@@ -44,7 +44,7 @@ class Person < ActiveRecord::Base
 		# use the explicitly given date/time
 		time = DateTime.now
 		if i = words.index('at') || words.index('@')
-			time = words[i+1..-1].join ' '
+			time = adjust_user_time words[i+1..-1].join(' ')
 			words = words[0...i]
 		end
 
@@ -61,6 +61,17 @@ class Person < ActiveRecord::Base
 		# throw out bad sentences
 		throw "invalid sentence" if words.size != 1
 		measure words[0], time, value
+	end
+
+	# turn user-entered time into actual time. straightforward use
+	# of datetime except that if no explicit date is given, make sure
+	# the time isn't in the future
+	def adjust_user_time(text)
+		return text unless Time.parse(text).future?
+		Date.parse text
+		text
+	rescue
+		"#{Date.yesterday.to_s} #{text}"
 	end
 
 	# user-configured first hour of the day, formatted as '6am'
