@@ -1,0 +1,110 @@
+<% ploticus(:svg, false, @opts) do -%>
+
+#proc page
+	pagesize: <%= @width * 7 %> <%= @height * @weeks %>
+	title: <%= @stat.name.capitalize %>
+
+#proc getdata
+	#intrailer
+
+// definition for cell area
+#procdef areadef
+	xrange: -1 24
+	yrange: 0 <%= @max * 1.1 %>
+	box: <%= @width %> <%= @height %>
+	#saveas cell
+
+// definition for bars in each cell
+#procdef bars
+	color: red
+	outline: no
+	barsrange: 0 23
+	barwidth: <%= @bars %>
+	locfield: 1
+	lenfield: 2
+	#saveas bars
+
+// full area
+#proc areadef
+	rectangle: 0 0 <%= @width * 7 %> <%= @height * @weeks %>
+	xrange: 0 7
+	yrange: 0 <%= @weeks %>
+
+#proc xaxis
+	stubslide: <%= -@width / 2 %>
+	grid: color=gray(0.7) width=0.5
+	tics: yes
+	stubs: text
+				 Mon
+				 Tue
+				 Wed
+				 Thu
+				 Fri
+				 Sat
+				 Sun
+
+// y axis on the left
+#proc yaxis
+	stubslide: <%= -@height / 2 %>
+	stubrange: 0 <%= @weeks %>
+	stubdetails: adjust=-.25,0
+	grid: color=gray(0.7) width=0.5
+	tics: yes
+	stubs: text
+	<% @labels.each do |l| -%>
+				 <%= l[0] %>
+	<% end -%>
+
+// y axis on the right
+#proc yaxis
+	location: 7(s)
+	stubslide: <%= -@height / 2 %>
+	stubrange 0 <%= @weeks %>
+	stubdetails: adjust=<%= @width %>,0
+	tics: yes
+	stubs: text
+	<% @labels.each do |l| -%>
+				 <%= l[1] %>
+	<% end -%>
+
+// loop through each cell
+	<% @cell_id = 0 -%>
+	<% (@weeks-1).downto(0) do |row| -%>
+		<% 0.upto(6) do |col| -%>
+			<% @cell_id += 1 -%>
+
+#proc areadef
+	#clone cell
+	location <%= col * @width %> <%= row * @height %>
+
+#proc bars
+	#clone bars
+	select: @@3 = <%= @cell_id %>
+		<% end -%>
+	<% end -%>
+
+// loop through each row for line plots
+	<% 1.upto(@weeks) do |row| -%>
+
+#proc areadef
+	location 0 <%= @height * (@weeks - row) %>
+	box <%= @width * 7 %> <%= @height %>
+	xrange 0 7
+	yrange 0 <%= @max * 1.1 %>
+	yaxis.stubs: inc <%= 10 ** (@max.to_s.size - 1) %>
+	yaxis.stubdetails: size=3
+	<% if row > 1 -%>
+	yaxis.stubrange 0 <%= @max-1 %>
+	<% end -%>
+
+#proc lineplot
+	xfield 1
+	yfield 2
+	linedetails: color=blue width=2
+	select: @@3 = <%= -row %>
+<% end %>
+
+// now the actual data
+#proc trailer
+	data: <%= format_data(@data) %>
+<% end -%>

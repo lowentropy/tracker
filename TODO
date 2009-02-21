@@ -1,6 +1,4 @@
-- BUG: add date should behave as group date
 - single-stat graphs
 - stat groups
 - group graphs
-- custom graphs
 - import food data and implement tracking
