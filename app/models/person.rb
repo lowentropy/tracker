@@ -49,8 +49,8 @@ class Person < ActiveRecord::Base
 
 		# use the explicitly given date/time
 		time = DateTime.now
-		if i = sentence.index('at') || sentence.index('@')
-			text = sentence[sentence.index(' ', i)..-1]
+		if i = sentence.index(/\s(at|@)\s/)
+			text = sentence[sentence.index(' ', i+1)..-1].strip
 			time = adjust_user_time text
 			sentence = sentence[0...i].strip
 		end
