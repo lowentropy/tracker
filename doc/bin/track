@@ -1,0 +1,6 @@
+#! /bin/bash
+
+APIKEY="DFEF3DEA-36BD-9E4A-633C-2DFC0F04E422"
+BASE="http://tracker.216brew.com/api/quick"
+
+wget -O - "$BASE/$APIKEY?message=$*" > /dev/null
