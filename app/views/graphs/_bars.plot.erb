@@ -1,0 +1,54 @@
+#proc page
+	linewidth: 2.5
+	pagesize 6.4 4.4
+	#if @DEVICE in gif,png
+		scale: 0.7
+	#endif
+
+#proc getdata
+data:	1.5 1 0.7 1.3 0
+			2.5 2 0.7 2.3 1
+			3.5 3 0.7 3.3 2
+			4.5 4 0.7 4.3 3
+
+#proc areadef
+	areaname: slide
+	xautorange: datafield=1 margin=0.5
+	yautorange: datafield=2 margin=1.5
+
+#proc xaxis
+	stubrange: 2 4
+	stubs: inc 1
+	axislinerange: 1.5 4.5
+
+#proc xaxis
+	selflocatingstubs: list 1.5 min=1.5\n4.5 max=4.5
+	axisline: none
+
+#proc yaxis
+	stubrange: 2 3
+	stubs: inc 1
+	axislinerange: 1 4
+
+#proc yaxis
+	selflocatingstubs: list 1 min=1\n4 max=4
+	axisline: none
+
+#proc scatterplot
+	xfield: 1
+	yfield: 2
+	symbol: style=fill shape=circle fillcolor=blue radius=0.03
+
+#proc bars
+	locfield: 1
+	lenfield: 4
+	errbarfield: 0 3
+	thinbarline: color=gray(0.7) width=2
+	tails: 0
+
+#proc bars
+	locfield: 1
+	lenfield: 5
+	errbarfield: 0 3
+	thinbarline: color=gray(0.7) width=2
+	tails: 0
