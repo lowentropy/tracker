@@ -51,15 +51,15 @@ class Measurement < ActiveRecord::Base
 		"%.#{stat.decimal_places}f" % value
 	end
 
-	def denormalized
-		stat.unit.denormalize value
+	def denormalized(unit=stat.unit)
+		unit.denormalize value
 	end
 
 	def in(unit)
 		"#{trim(unit.denormalize(value))} #{unit.short_name}"
 	end
 
-	def display(unit)
+	def display(unit=stat.unit)
 		"#{short_time}: #{self.in(unit)}"
 	end
 

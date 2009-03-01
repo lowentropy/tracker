@@ -2,7 +2,7 @@ class StatsController < ApplicationController
   # GET /stats
   # GET /stats.xml
   def index
-    @stats = Stat.find(:all)
+    @stats = @person.stats
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +14,7 @@ class StatsController < ApplicationController
   # GET /stats/1.xml
   def show
     @stat = Stat.find(params[:id])
+		raise "not owner" unless @stat.person.id == @person.id
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,10 +25,19 @@ class StatsController < ApplicationController
 	# GET /stats/1/plot.svg
 	def plot
 		@stat = Stat.find params[:id]
+		raise "not owner" unless @stat.person.id == @person.id
 		respond_to do |format|
-			table = @person.table(@person.stat_range(@stat))
-			image = @person.plot_weekly(table, @stat)
-			format.svg  { render :text => image }
+			format.svg do
+				table = @person.table(@person.stat_range(@stat))
+				image = @person.plot_weekly(table, @stat)
+				render :text => image
+			end
+			format.txt do
+				values = @stat.measurements.map {|m| m.denormalized.to_i}
+				title = "#{@stat.name} (in #{@stat.unit.long_name.pluralize})"
+				text = "#{title}\n#{values.join("\n")}"
+				render :text => text
+			end
 		end
 	end
 

@@ -8,4 +8,5 @@ ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 	inflect.irregular 'calorie', 'calories'
+	inflect.irregular 'foot', 'feet'
 end
