@@ -26,14 +26,14 @@ class StatsController < ApplicationController
 	def plot
 		@stat = Stat.find params[:id]
 		raise "not owner" unless @stat.person.id == @person.id
+		table = @person.table(@person.stat_range(@stat))
 		respond_to do |format|
 			format.svg do
-				table = @person.table(@person.stat_range(@stat))
 				image = @person.plot_weekly(table, @stat)
 				render :text => image
 			end
 			format.txt do
-				values = @stat.measurements.map {|m| m.denormalized.to_i}
+				values = table.daily_values(@stat).map {|v| v.to_i if v}
 				title = "#{@stat.name} (in #{@stat.unit.long_name.pluralize})"
 				text = "#{title}\n#{values.join("\n")}"
 				render :text => text
