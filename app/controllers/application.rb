@@ -19,8 +19,12 @@ class ApplicationController < ActionController::Base
 
 private
 
+	def debug_mode?
+		ENV["RAILS_ENV"] == 'development'
+	end
+
 	def login
-		fake_login and return if ENV["RAILS_ENV"] == 'development'
+		fake_login and return if debug_mode?
 		session[:attempt] = request.url
 		if (url = session[:person_openid_url])
 			@person = Person.find_by_openid_url url

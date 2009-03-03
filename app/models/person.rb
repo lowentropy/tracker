@@ -40,7 +40,7 @@ class Person < ActiveRecord::Base
 	def measure(stat_or_name, time, value, unit=nil)
 		stat = self.stat(stat_or_name)
 		raise "unknown stat: #{stat_or_name}" unless stat
-		value = Unit.normalize(value, unit || stat.unit)
+		value = Unit.normalize(value, unit || stat.unit, stat)
 		stat.measurements.new :measured_at => time, :value => value
 	end
 
@@ -64,6 +64,8 @@ class Person < ActiveRecord::Base
 			words = entry.strip.split(/\s+/)
 
 			# use the explicitly given numeric value
+			# TODO: check if the user accidentally left out
+			# the space between number and unit, e.g. 324mg
 			value = 1.0
 			if words[0].to_f != 0.0
 				value = words.shift.to_f

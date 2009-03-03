@@ -45,6 +45,7 @@ class MeasurementsController < ApplicationController
 			begin
 				@person.quick params[:quick]
 			rescue
+				fail if debug_mode?
 				flash[:notice] = $!.message
 			end
 			redirect_to(:back) and return
