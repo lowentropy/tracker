@@ -17,14 +17,14 @@ class Person < ActiveRecord::Base
 
 	# default number of days to include in tables, graphs
 	def default_range
-		(measurements.first.measured_at.to_date..Date.today)
+		(measurements.first.date..Date.today)
 	end
 
 	# return the range of dates for which values of the given
 	# stat were recorded
 	def stat_range(stat_or_name)
 		first = stat(stat_or_name).measurements.first
-		(first.measured_at.to_date..Date.today)
+		(first.date..Date.today)
 	end
 
 	# return a table of measurements in the given range.
